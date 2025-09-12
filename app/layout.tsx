@@ -26,11 +26,6 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Claims Dashboard Team" }],
   creator: "Claims Dashboard",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
   openGraph: {
     type: "website",
     locale: "en_US",

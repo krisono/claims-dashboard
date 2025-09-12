@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import {
   DollarSign,
   FileText,
@@ -197,6 +198,9 @@ function PriorityBadge({ priority }: { priority: string }) {
   );
 }
 
+import { LastUpdated } from "@/components/ui/last-updated";
+import { ClientDate } from "@/components/ui/client-date";
+
 export function DashboardOverview() {
   return (
     <div className="p-6 space-y-6">
@@ -212,7 +216,7 @@ export function DashboardOverview() {
         </div>
         <div className="flex items-center space-x-2 text-sm text-muted-foreground">
           <Calendar className="h-4 w-4" />
-          <span>Last updated: {new Date().toLocaleString()}</span>
+          <LastUpdated />
         </div>
       </div>
 
@@ -300,7 +304,7 @@ export function DashboardOverview() {
                     <PriorityBadge priority={claim.priority} />
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
-                    {new Date(claim.date).toLocaleDateString()}
+                    <ClientDate date={claim.date} />
                   </td>
                 </tr>
               ))}
@@ -308,9 +312,12 @@ export function DashboardOverview() {
           </table>
         </div>
         <div className="border-t px-6 py-4">
-          <button className="text-sm text-primary hover:text-primary/80 font-medium">
+          <Link
+            href="/dashboard/claims"
+            className="text-sm text-primary hover:text-primary/80 font-medium transition-colors"
+          >
             View all claims →
-          </button>
+          </Link>
         </div>
       </motion.div>
 
@@ -350,7 +357,14 @@ export function DashboardOverview() {
               </p>
             </div>
           </div>
-          <button className="mt-4 w-full rounded-md border border-input bg-background px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground">
+          <button
+            onClick={() => {
+              alert(
+                "Bulk Actions:\n• Approve selected claims\n• Reject selected claims\n• Assign to adjuster\n• Export to CSV"
+              );
+            }}
+            className="mt-4 w-full rounded-md border border-input bg-background px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+          >
             Bulk Actions
           </button>
         </div>
@@ -363,13 +377,25 @@ export function DashboardOverview() {
             <div>
               <h3 className="font-semibold">Fraud Detection</h3>
               <p className="text-sm text-muted-foreground">
-                Review flagged claims
+                <button
+                  onClick={() => {
+                    alert(
+                      "Flagged Claims for Review:\n• CLM-2024-001: Suspicious damage patterns\n• CLM-2024-007: Multiple claims from same address\n• CLM-2024-012: High-value claim requiring verification"
+                    );
+                  }}
+                  className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                >
+                  Review flagged claims
+                </button>
               </p>
             </div>
           </div>
-          <button className="mt-4 w-full rounded-md border border-input bg-background px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground">
+          <Link
+            href="/dashboard/investigations"
+            className="mt-4 w-full rounded-md border border-input bg-background px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors inline-block text-center"
+          >
             Investigate
-          </button>
+          </Link>
         </div>
       </motion.div>
     </div>
