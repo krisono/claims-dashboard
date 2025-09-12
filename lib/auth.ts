@@ -3,6 +3,7 @@ import type { NextAuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import GitHubProvider from 'next-auth/providers/github'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import { runtimeUrl } from './env'
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -83,6 +84,8 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
   },
+  // Note: trustHost is not available in NextAuth v4, but Vercel automatically handles host detection
+  // Dynamic URL detection is handled via NEXTAUTH_URL environment variable with fallback in lib/env.ts
   pages: {
     signIn: '/auth/signin',
     error: '/auth/error',
