@@ -4,15 +4,23 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
 
 # Production builds
 dist/
 build/
+.next/
+out/
 
 # Environment variables
 .env
 .env.local
+.env.development.local
+.env.test.local
 .env.production.local
+.env.*.local
 
 # IDE & Editor files
 .vscode/
@@ -20,31 +28,91 @@ build/
 *.iml
 *.swp
 *.swo
+*.code-workspace
 
 # Operating System
 .DS_Store
+.DS_Store?
 Thumbs.db
+ehthumbs.db
+Icon?
 
 # Logs
 *.log
 logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
 
-# Cache
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Cache directories
 .cache/
 .vite/
+.next/cache/
+.turbo/
 *.tsbuildinfo
+.eslintcache
 
-# Java
-*.class
-target/
-*.jar
-*.war
+# Testing
+coverage/
+.nyc_output/
+.coverage/
+*.lcov
 
 # Database
 *.db
+*.sqlite
+*.sqlite3
 *.trace.db
 *.lock.db
 
-# Documentation 
+# Prisma
+prisma/migrations/dev.db*
+
+# Sentry Config File
+.sentryclirc
+
+# Vercel
+.vercel
+
+# Temporary folders
+tmp/
+temp/
+
+# Error screenshots
+screenshots/
+cypress/screenshots/
+cypress/videos/
+
+# Documentation that should be ignored (keep important ones)
+!README.md
+!TODO.md
+!TECHNICAL_GUIDE.md
+
+# Backup files
+*.backup
+*.bak
+*.old
+
+# Docker
+.dockerignore
+
+# TypeScript
+*.tsbuildinfo
+
+# Storybook
+storybook-static/
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+
 *.md
 !README.md
