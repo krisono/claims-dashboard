@@ -16,6 +16,7 @@ export function formatCurrency(
   }).format(amount)
 }
 
+
 export function formatDate(
   date: Date | string,
   locale: string = 'en-US',
