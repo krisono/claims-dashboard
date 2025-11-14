@@ -140,7 +140,6 @@ export default function SignInPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
       <div className="container max-w-lg mx-auto px-4 py-8">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -158,7 +157,6 @@ export default function SignInPage() {
           </p>
         </motion.div>
 
-        {/* Demo Login Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -198,7 +196,6 @@ export default function SignInPage() {
           </button>
         </motion.div>
 
-        {/* Divider */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -212,7 +209,6 @@ export default function SignInPage() {
           <div className="border-t border-border w-full" />
         </motion.div>
 
-        {/* OAuth Providers */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -236,7 +232,6 @@ export default function SignInPage() {
           </button>
         </motion.div>
 
-        {/* Footer */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

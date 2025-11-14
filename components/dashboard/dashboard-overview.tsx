@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 
-// Demo data - in a real app, this would come from an API
 const kpiData = [
   {
     title: "Total Claims",
@@ -129,7 +128,7 @@ function KPICard({
   return (
     <motion.div
       variants={item}
-      className="rounded-lg border bg-card p-6 shadow-sm"
+      className="rounded-lg border bg-card p-4 sm:p-6 shadow-sm"
     >
       <div className="flex items-center justify-between">
         <div
@@ -137,22 +136,24 @@ function KPICard({
             colorClasses[color as keyof typeof colorClasses]
           }`}
         >
-          <Icon className="h-5 w-5" />
+          <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
         </div>
         <div
-          className={`flex items-center text-sm ${
+          className={`flex items-center text-xs sm:text-sm ${
             trend === "up" ? "text-green-600" : "text-red-600"
           }`}
         >
           <TrendingUp
-            className={`h-4 w-4 mr-1 ${trend === "down" ? "rotate-180" : ""}`}
+            className={`h-3 w-3 sm:h-4 sm:w-4 mr-1 ${
+              trend === "down" ? "rotate-180" : ""
+            }`}
           />
           {change}
         </div>
       </div>
-      <div className="mt-4">
-        <h3 className="text-2xl font-bold">{value}</h3>
-        <p className="text-sm text-muted-foreground mt-1">{title}</p>
+      <div className="mt-3 sm:mt-4">
+        <h3 className="text-xl sm:text-2xl font-bold">{value}</h3>
+        <p className="text-xs sm:text-sm text-muted-foreground mt-1">{title}</p>
       </div>
     </motion.div>
   );
@@ -203,71 +204,68 @@ import { ClientDate } from "@/components/ui/client-date";
 
 export function DashboardOverview() {
   return (
-    <div className="p-6 space-y-6">
-      {/* Header */}
+    <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
       <div className="flex flex-col space-y-2 lg:flex-row lg:items-center lg:justify-between lg:space-y-0">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
             Dashboard Overview
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-sm sm:text-base text-muted-foreground">
             Welcome back! Here's what's happening with your claims today.
           </p>
         </div>
-        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+        <div className="flex items-center space-x-2 text-xs sm:text-sm text-muted-foreground">
           <Calendar className="h-4 w-4" />
           <LastUpdated />
         </div>
       </div>
 
-      {/* KPI Cards */}
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="grid gap-4 md:grid-cols-2 lg:grid-cols-4"
+        className="grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4"
       >
         {kpiData.map((kpi, index) => (
           <KPICard key={index} {...kpi} />
         ))}
       </motion.div>
 
-      {/* Recent Claims Table */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
         className="rounded-lg border bg-card"
       >
-        <div className="border-b px-6 py-4">
-          <h2 className="text-lg font-semibold">Recent Claims</h2>
-          <p className="text-sm text-muted-foreground">
+        <div className="border-b px-4 sm:px-6 py-3 sm:py-4">
+          <h2 className="text-base sm:text-lg font-semibold">Recent Claims</h2>
+          <p className="text-xs sm:text-sm text-muted-foreground">
             Latest claims requiring your attention
           </p>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full text-sm">
             <thead>
               <tr className="border-b bg-muted/50">
-                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Claim ID
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider hidden sm:table-cell">
                   Claimant
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider hidden md:table-cell">
                   Type
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Amount
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider hidden lg:table-cell">
                   Priority
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider hidden md:table-cell">
                   Date
                 </th>
               </tr>
@@ -278,32 +276,32 @@ export function DashboardOverview() {
                   key={claim.id}
                   className="hover:bg-muted/50 transition-colors"
                 >
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm font-medium">
                     {claim.id}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap hidden sm:table-cell">
                     <div className="flex items-center">
-                      <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center mr-3">
-                        <Users className="h-4 w-4 text-primary" />
+                      <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-primary/10 flex items-center justify-center mr-2 sm:mr-3">
+                        <Users className="h-3 w-3 sm:h-4 sm:w-4 text-primary" />
                       </div>
-                      <div className="text-sm font-medium">
+                      <div className="text-xs sm:text-sm font-medium">
                         {claim.claimant}
                       </div>
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm text-muted-foreground hidden md:table-cell">
                     {claim.type}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm font-semibold">
                     {claim.amount}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
                     <StatusBadge status={claim.status} />
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap hidden lg:table-cell">
                     <PriorityBadge priority={claim.priority} />
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm text-muted-foreground hidden md:table-cell">
                     <ClientDate date={claim.date} />
                   </td>
                 </tr>
@@ -321,7 +319,6 @@ export function DashboardOverview() {
         </div>
       </motion.div>
 
-      {/* Quick Actions */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

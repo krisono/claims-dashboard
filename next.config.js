@@ -15,7 +15,6 @@ const nextConfig = {
       },
     ],
   },
-  // Enable bundle analyzer with ANALYZE=true
   ...(process.env.ANALYZE === 'true' && {
     webpack: (config, { dev }) => {
       if (!dev) {

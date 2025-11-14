@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -15,6 +15,8 @@ import {
   Moon,
   Sun,
   Bell,
+  Menu,
+  X,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { signOut, useSession } from "next-auth/react";
@@ -31,13 +33,24 @@ export function Navbar() {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   const { data: session } = useSession();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center">
-        {/* Logo */}
+      <div className="container flex h-16 items-center px-4">
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="md:hidden mr-2 p-2 text-foreground/60 hover:text-foreground"
+        >
+          {mobileMenuOpen ? (
+            <X className="h-5 w-5" />
+          ) : (
+            <Menu className="h-5 w-5" />
+          )}
+        </button>
+
         <div className="mr-4 flex">
-          <Link href="/dashboard" className="mr-6 flex items-center space-x-2">
+          <Link href="/dashboard" className="flex items-center space-x-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <FileText className="h-4 w-4" />
             </div>
@@ -47,7 +60,6 @@ export function Navbar() {
           </Link>
         </div>
 
-        {/* Navigation */}
         <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
           {navigation.map((item) => {
             const isActive =
@@ -70,9 +82,7 @@ export function Navbar() {
           })}
         </nav>
 
-        {/* Right side */}
         <div className="ml-auto flex items-center space-x-2 md:space-x-4">
-          {/* Notifications */}
           <button
             onClick={() =>
               alert(
@@ -87,7 +97,6 @@ export function Navbar() {
             </span>
           </button>
 
-          {/* Theme Toggle */}
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             className="relative rounded-md p-2 text-foreground/60 hover:text-foreground"
@@ -97,7 +106,6 @@ export function Navbar() {
             <span className="sr-only">Toggle theme</span>
           </button>
 
-          {/* User Menu */}
           <div className="flex items-center space-x-2">
             {session?.user ? (
               <div className="flex items-center space-x-2">
@@ -132,6 +140,47 @@ export function Navbar() {
           </div>
         </div>
       </div>
+
+      {mobileMenuOpen && (
+        <div className="md:hidden border-t bg-background">
+          <nav className="container py-4 px-4 space-y-2">
+            {navigation.map((item) => {
+              const isActive =
+                pathname === item.href ||
+                (item.href !== "/dashboard" && pathname?.startsWith(item.href));
+
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={cn(
+                    "flex items-center space-x-3 px-3 py-2 rounded-md transition-colors",
+                    isActive
+                      ? "bg-primary/10 text-foreground"
+                      : "text-foreground/60 hover:bg-accent hover:text-foreground"
+                  )}
+                >
+                  <item.icon className="h-5 w-5" />
+                  <span className="font-medium">{item.name}</span>
+                </Link>
+              );
+            })}
+            {session?.user && (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  signOut();
+                }}
+                className="w-full flex items-center space-x-3 px-3 py-2 rounded-md text-foreground/60 hover:bg-accent hover:text-foreground transition-colors"
+              >
+                <LogOut className="h-5 w-5" />
+                <span className="font-medium">Sign Out</span>
+              </button>
+            )}
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

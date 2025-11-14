@@ -1,9 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-// import { getServerSession } from 'next-auth'
-// import { authOptions } from '@/lib/auth'
-// import { prisma } from '@/lib/prisma'
 
-// Mock data for demo purposes
 const mockClaims = [
   {
     id: '1',
@@ -22,20 +18,12 @@ const mockClaims = [
   }
 ]
 
-// GET /api/claims - List claims with filtering and pagination
 export async function GET(request: NextRequest) {
   try {
-    // In production, you would check authentication here
-    // const session = await getServerSession(authOptions)
-    // if (!session) {
-    //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    // }
-
     const { searchParams } = new URL(request.url)
     const page = parseInt(searchParams.get('page') || '1')
     const limit = parseInt(searchParams.get('limit') || '10')
 
-    // Return mock data for demo
     return NextResponse.json({
       claims: mockClaims,
       pagination: {

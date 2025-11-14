@@ -84,8 +84,6 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
   },
-  // Note: trustHost is not available in NextAuth v4, but Vercel automatically handles host detection
-  // Dynamic URL detection is handled via NEXTAUTH_URL environment variable with fallback in lib/env.ts
   pages: {
     signIn: '/auth/signin',
     error: '/auth/error',

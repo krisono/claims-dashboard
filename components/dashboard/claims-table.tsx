@@ -19,7 +19,6 @@ import {
 } from "lucide-react";
 import { formatCurrency, formatDate, cn } from "@/lib/utils";
 
-// Demo data - in production this would come from the API
 const mockClaims = [
   {
     id: "1",
@@ -85,6 +84,136 @@ const mockClaims = [
     createdAt: "2024-01-13T16:10:00Z",
     assignee: null,
     fraudScore: 12,
+  },
+  {
+    id: "6",
+    claimNumber: "CLM-001842",
+    claimantName: "Robert Martinez",
+    title: "Water Damage Claim",
+    incidentType: "WATER_DAMAGE",
+    claimAmount: 18500,
+    status: "UNDER_REVIEW",
+    priority: "HIGH",
+    createdAt: "2024-01-12T08:45:00Z",
+    assignee: { name: "Sarah Lee" },
+    fraudScore: 22,
+  },
+  {
+    id: "7",
+    claimNumber: "CLM-001841",
+    claimantName: "Lisa Anderson",
+    title: "Workplace Injury Claim",
+    incidentType: "INJURY",
+    claimAmount: 32000,
+    status: "APPROVED",
+    priority: "MEDIUM",
+    createdAt: "2024-01-11T13:20:00Z",
+    assignee: { name: "Mike Johnson" },
+    fraudScore: 10,
+  },
+  {
+    id: "8",
+    claimNumber: "CLM-001840",
+    claimantName: "James Thompson",
+    title: "Vehicle Theft Claim",
+    incidentType: "THEFT",
+    claimAmount: 28900,
+    status: "INVESTIGATION",
+    priority: "CRITICAL",
+    createdAt: "2024-01-10T15:30:00Z",
+    assignee: { name: "Emma Davis" },
+    fraudScore: 65,
+  },
+  {
+    id: "9",
+    claimNumber: "CLM-001839",
+    claimantName: "Patricia White",
+    title: "Slip and Fall Claim",
+    incidentType: "INJURY",
+    claimAmount: 15750,
+    status: "SUBMITTED",
+    priority: "MEDIUM",
+    createdAt: "2024-01-09T10:15:00Z",
+    assignee: null,
+    fraudScore: 18,
+  },
+  {
+    id: "10",
+    claimNumber: "CLM-001838",
+    claimantName: "Christopher Brown",
+    title: "Hail Damage Claim",
+    incidentType: "WEATHER",
+    claimAmount: 9200,
+    status: "APPROVED",
+    priority: "LOW",
+    createdAt: "2024-01-08T14:00:00Z",
+    assignee: { name: "Tom Harris" },
+    fraudScore: 3,
+  },
+  {
+    id: "11",
+    claimNumber: "CLM-001837",
+    claimantName: "Amanda Garcia",
+    title: "Burglary Claim",
+    incidentType: "THEFT",
+    claimAmount: 12300,
+    status: "UNDER_REVIEW",
+    priority: "HIGH",
+    createdAt: "2024-01-07T09:40:00Z",
+    assignee: { name: "Lisa Chen" },
+    fraudScore: 38,
+  },
+  {
+    id: "12",
+    claimNumber: "CLM-001836",
+    claimantName: "Kevin Taylor",
+    title: "Windstorm Damage Claim",
+    incidentType: "WEATHER",
+    claimAmount: 22400,
+    status: "SETTLED",
+    priority: "MEDIUM",
+    createdAt: "2024-01-06T11:25:00Z",
+    assignee: { name: "Rachel Green" },
+    fraudScore: 7,
+  },
+  {
+    id: "13",
+    claimNumber: "CLM-001835",
+    claimantName: "Michelle Lee",
+    title: "Product Liability Claim",
+    incidentType: "LIABILITY",
+    claimAmount: 41000,
+    status: "INVESTIGATION",
+    priority: "CRITICAL",
+    createdAt: "2024-01-05T16:50:00Z",
+    assignee: { name: "David Kim" },
+    fraudScore: 52,
+  },
+  {
+    id: "14",
+    claimNumber: "CLM-001834",
+    claimantName: "Daniel Moore",
+    title: "Vandalism Claim",
+    incidentType: "PROPERTY_DAMAGE",
+    claimAmount: 6800,
+    status: "APPROVED",
+    priority: "LOW",
+    createdAt: "2024-01-04T12:10:00Z",
+    assignee: { name: "Anna Wilson" },
+    fraudScore: 12,
+  },
+  {
+    id: "15",
+    claimNumber: "CLM-001833",
+    claimantName: "Jessica Harris",
+    title: "Medical Malpractice Claim",
+    incidentType: "MEDICAL",
+    claimAmount: 85000,
+    status: "INVESTIGATION",
+    priority: "CRITICAL",
+    createdAt: "2024-01-03T08:30:00Z",
+    assignee: { name: "Chris Martinez" },
+    fraudScore: 45,
   },
 ];
 
@@ -177,17 +306,12 @@ export function ClaimsTable() {
   const [priorityFilter, setPriorityFilter] = useState("ALL");
   const [selectedClaims, setSelectedClaims] = useState<string[]>([]);
 
-  // Handler functions
   const handleCreateClaim = () => {
-    alert(
-      "Create New Claim dialog would open here. This is a demo implementation."
-    );
+    alert("Create New Claim dialog would open here.");
   };
 
   const handleExport = () => {
-    alert(
-      "Export functionality would download CSV/Excel file. This is a demo implementation."
-    );
+    alert("Export functionality would download file.");
   };
 
   const handleBulkApprove = () => {
@@ -195,9 +319,7 @@ export function ClaimsTable() {
       alert("Please select claims to approve.");
       return;
     }
-    alert(
-      `Bulk approve ${selectedClaims.length} claims. This is a demo implementation.`
-    );
+    alert(`Bulk approve ${selectedClaims.length} claims.`);
   };
 
   const handleFraudInvestigation = () => {
@@ -205,9 +327,7 @@ export function ClaimsTable() {
       alert("Please select claims to investigate.");
       return;
     }
-    alert(
-      `Start fraud investigation for ${selectedClaims.length} claims. This is a demo implementation.`
-    );
+    alert(`Start fraud investigation for ${selectedClaims.length} claims.`);
   };
 
   const handleClaimSelection = (claimId: string) => {
@@ -226,11 +346,9 @@ export function ClaimsTable() {
     );
   };
 
-  // In a real app, this would be an API call
   const { data: claims = mockClaims, isLoading } = useQuery({
     queryKey: ["claims", searchTerm, statusFilter, priorityFilter],
     queryFn: async () => {
-      // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 500));
       return mockClaims.filter((claim) => {
         const matchesSearch =
@@ -261,7 +379,6 @@ export function ClaimsTable() {
   if (isLoading) {
     return (
       <div className="space-y-4">
-        {/* Loading skeleton */}
         {[...Array(5)].map((_, i) => (
           <div key={i} className="h-16 bg-muted rounded-lg animate-pulse" />
         ))}
@@ -271,10 +388,8 @@ export function ClaimsTable() {
 
   return (
     <div className="space-y-6">
-      {/* Filters and Search */}
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <div className="flex flex-col sm:flex-row gap-4 flex-1">
-          {/* Search */}
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <input
@@ -286,7 +401,6 @@ export function ClaimsTable() {
             />
           </div>
 
-          {/* Status Filter */}
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
@@ -300,7 +414,6 @@ export function ClaimsTable() {
             <option value="REJECTED">Rejected</option>
           </select>
 
-          {/* Priority Filter */}
           <select
             value={priorityFilter}
             onChange={(e) => setPriorityFilter(e.target.value)}
@@ -314,7 +427,6 @@ export function ClaimsTable() {
           </select>
         </div>
 
-        {/* Actions */}
         <div className="flex gap-2">
           {selectedClaims.length > 0 && (
             <>
@@ -349,7 +461,6 @@ export function ClaimsTable() {
         </div>
       </div>
 
-      {/* Table */}
       <div className="rounded-lg border bg-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -520,7 +631,6 @@ export function ClaimsTable() {
         )}
       </div>
 
-      {/* Pagination */}
       {claims.length > 0 && (
         <div className="flex items-center justify-between">
           <div className="text-sm text-muted-foreground">

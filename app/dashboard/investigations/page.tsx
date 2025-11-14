@@ -34,10 +34,10 @@ export default function InvestigationsPage() {
   ]);
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">Investigations</h1>
-        <p className="text-muted-foreground">
+    <div className="container mx-auto p-4 sm:p-6">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold">Investigations</h1>
+        <p className="text-sm sm:text-base text-muted-foreground">
           Manage and track ongoing investigations
         </p>
       </div>
@@ -46,10 +46,12 @@ export default function InvestigationsPage() {
         {investigations.map((investigation) => (
           <Card key={investigation.id}>
             <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-lg">{investigation.id}</CardTitle>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                <CardTitle className="text-base sm:text-lg">
+                  {investigation.id}
+                </CardTitle>
                 <span
-                  className={`px-2 py-1 rounded-full text-xs font-medium ${
+                  className={`px-2 py-1 rounded-full text-xs font-medium w-fit ${
                     investigation.status === "In Progress"
                       ? "bg-yellow-100 text-yellow-800"
                       : "bg-green-100 text-green-800"
@@ -58,15 +60,17 @@ export default function InvestigationsPage() {
                   {investigation.status}
                 </span>
               </div>
-              <CardDescription>
+              <CardDescription className="text-sm">
                 Related Claim: {investigation.claimId} • {investigation.type}
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm text-muted-foreground">Assignee</p>
-                  <p className="font-medium">{investigation.assignee}</p>
+                  <p className="font-medium text-sm sm:text-base">
+                    {investigation.assignee}
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Priority</p>
@@ -80,9 +84,11 @@ export default function InvestigationsPage() {
                     {investigation.priority}
                   </span>
                 </div>
-                <div className="md:col-span-2">
+                <div className="sm:col-span-2">
                   <p className="text-sm text-muted-foreground">Description</p>
-                  <p>{investigation.description}</p>
+                  <p className="text-sm sm:text-base">
+                    {investigation.description}
+                  </p>
                 </div>
               </div>
             </CardContent>

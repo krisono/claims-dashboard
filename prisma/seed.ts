@@ -208,7 +208,6 @@ async function main() {
       })
     }
 
-    // Create some notes for random claims
     if (Math.random() > 0.6) {
       await prisma.note.create({
         data: {

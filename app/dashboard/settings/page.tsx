@@ -28,16 +28,15 @@ export default function SettingsPage() {
   });
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">Settings</h1>
-        <p className="text-muted-foreground">
+    <div className="container mx-auto p-4 sm:p-6">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold">Settings</h1>
+        <p className="text-sm sm:text-base text-muted-foreground">
           Manage your account preferences and security
         </p>
       </div>
 
       <div className="grid gap-6">
-        {/* Notification Settings */}
         <Card>
           <CardHeader>
             <CardTitle>Notification Preferences</CardTitle>
@@ -46,10 +45,12 @@ export default function SettingsPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <div>
-                <p className="font-medium">Email Notifications</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="font-medium text-sm sm:text-base">
+                  Email Notifications
+                </p>
+                <p className="text-xs sm:text-sm text-muted-foreground">
                   Receive updates via email
                 </p>
               </div>
@@ -68,10 +69,12 @@ export default function SettingsPage() {
                 }
               />
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <div>
-                <p className="font-medium">Push Notifications</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="font-medium text-sm sm:text-base">
+                  Push Notifications
+                </p>
+                <p className="text-xs sm:text-sm text-muted-foreground">
                   Browser push notifications
                 </p>
               </div>
@@ -93,7 +96,6 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
 
-        {/* Security Settings */}
         <Card>
           <CardHeader>
             <CardTitle>Security</CardTitle>
@@ -147,7 +149,6 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
 
-        {/* Preferences */}
         <Card>
           <CardHeader>
             <CardTitle>Preferences</CardTitle>

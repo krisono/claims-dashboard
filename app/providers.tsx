@@ -18,10 +18,8 @@ export function Providers({ children, session }: ProvidersProps) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            // With SSR, we usually want to set some default staleTime
-            // above 0 to avoid refetching immediately on the client
-            staleTime: 60 * 1000, // 1 minute
-            gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
+            staleTime: 60 * 1000,
+            gcTime: 10 * 60 * 1000,
             retry: 2,
             refetchOnWindowFocus: false,
             refetchOnMount: false,

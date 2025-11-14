@@ -9,7 +9,6 @@ export default function GlobalError({
   error: Error & { digest?: string };
 }) {
   useEffect(() => {
-    // Log error to console in development
     console.error("Global error:", error);
   }, [error]);
 
