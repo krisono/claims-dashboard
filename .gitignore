@@ -90,10 +90,9 @@ screenshots/
 cypress/screenshots/
 cypress/videos/
 
-# Documentation that should be ignored (keep important ones)
+*.md
 !README.md
-!TODO.md
-!TECHNICAL_GUIDE.md
+
 
 # Backup files
 *.backup
@@ -113,6 +112,3 @@ storybook-static/
 test-results/
 playwright-report/
 playwright/.cache/
-
-*.md
-!README.md

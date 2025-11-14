@@ -47,10 +47,12 @@ export default function ReportsPage() {
     ];
 
     const randomType =
-      reportTypes[Math.floor(Math.random() * reportTypes.length)];
+      reportTypes[Math.floor(Math.random() * reportTypes.length)] ||
+      "Financial";
     const randomTitle =
-      reportTitles[Math.floor(Math.random() * reportTitles.length)];
-    const today = new Date().toISOString().split("T")[0];
+      reportTitles[Math.floor(Math.random() * reportTitles.length)] ||
+      "New Report";
+    const today = new Date().toISOString().split("T")[0] || "";
 
     const newReport = {
       id: `RPT-${String(reports.length + 1).padStart(3, "0")}`,
