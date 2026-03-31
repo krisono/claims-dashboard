@@ -43,21 +43,12 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST /api/claims - Create new claim
 export async function POST(request: NextRequest) {
   try {
-    // In production, you would check authentication here
-    // const session = await getServerSession(authOptions)
-    // if (!session?.user?.id) {
-    //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    // }
-
     const body = await request.json()
     
-    // Generate claim number
     const claimNumber = `CLM-${Date.now().toString().slice(-6)}`
 
-    // Mock response for demo
     const newClaim = {
       id: Date.now().toString(),
       claimNumber,

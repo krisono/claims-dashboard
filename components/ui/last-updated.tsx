@@ -6,10 +6,8 @@ export function LastUpdated() {
   const [timestamp, setTimestamp] = useState<string>("");
 
   useEffect(() => {
-    // Set initial timestamp
     setTimestamp(new Date().toLocaleString());
 
-    // Update every minute
     const interval = setInterval(() => {
       setTimestamp(new Date().toLocaleString());
     }, 60000);

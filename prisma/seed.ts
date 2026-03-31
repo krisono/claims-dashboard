@@ -109,7 +109,6 @@ function getRandomDate(daysAgo: number): Date {
 async function main() {
   console.log('🌱 Seeding database with demo data...')
 
-  // Create demo users
   const demoUsers = await Promise.all([
     prisma.user.upsert({
       where: { email: 'admin@demo.com' },
@@ -155,7 +154,6 @@ async function main() {
 
   console.log('✅ Created demo users')
 
-  // Create demo claims
   const claims = []
   for (let i = 0; i < 50; i++) {
     const claimType = getRandomElement(claimTypes)
@@ -190,7 +188,6 @@ async function main() {
 
     claims.push(claim)
 
-    // Create some activities for each claim
     const activityCount = getRandomAmount(1, 5)
     for (let j = 0; j < activityCount; j++) {
       const activityDate = new Date(createdDate.getTime() + j * 24 * 60 * 60 * 1000)

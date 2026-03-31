@@ -29,7 +29,7 @@ export function Providers({ children, session }: ProvidersProps) {
             retry: 1,
           },
         },
-      })
+      }),
   );
 
   return (
@@ -45,8 +45,8 @@ export function Providers({ children, session }: ProvidersProps) {
         </ThemeProvider>
         <ReactQueryDevtools
           initialIsOpen={false}
-          position={"bottom-right" as any}
-          buttonPosition={"bottom-right" as any}
+          position="bottom"
+          buttonPosition="bottom-right"
         />
       </QueryClientProvider>
     </SessionProvider>

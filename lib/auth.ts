@@ -3,7 +3,6 @@ import type { NextAuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import GitHubProvider from 'next-auth/providers/github'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { runtimeUrl } from './env'
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -27,7 +26,8 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (!credentials?.role) return null
 
-        const demoUsers: Record<string, any> = {
+        type DemoUser = { id: string; name: string; email: string; role: string; image: null }
+        const demoUsers: Record<string, DemoUser> = {
           admin: {
             id: 'demo-admin',
             name: 'Admin User',
@@ -69,14 +69,14 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = (user as any).role
+        token.role = user.role
       }
       return token
     },
     async session({ session, token }) {
       if (token && session.user) {
-        (session.user as any).id = token.sub;
-        (session.user as any).role = token.role;
+        session.user.id = token.sub ?? '';
+        session.user.role = token.role;
       }
       return session
     },

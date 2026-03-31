@@ -9,8 +9,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+interface Report {
+  id: string;
+  title: string;
+  type: string;
+  generatedAt: string;
+  status: string;
+  fileSize: string;
+}
+
 export default function ReportsPage() {
-  const [reports, setReports] = useState([
+  const [reports, setReports] = useState<Report[]>([
     {
       id: "RPT-001",
       title: "Monthly Claims Summary",
@@ -65,7 +74,6 @@ export default function ReportsPage() {
 
     setReports([newReport, ...reports]);
 
-    // Simulate report generation completion
     setTimeout(() => {
       setReports((prev) =>
         prev.map((r) =>
@@ -75,8 +83,8 @@ export default function ReportsPage() {
                 status: "Generated",
                 fileSize: `${(Math.random() * 3 + 1).toFixed(1)} MB`,
               }
-            : r
-        )
+            : r,
+        ),
       );
     }, 2000);
   };
