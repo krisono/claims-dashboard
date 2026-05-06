@@ -9,13 +9,13 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://claims-dashboard.vercel.app"),
+  metadataBase: new URL("https://claims-dash.vercel.app"),
   title: {
-    default: "Claims Dashboard - Professional Claims Management",
-    template: "%s | Claims Dashboard",
+    default: "Claims-Dash - Professional Claims Management",
+    template: "%s | Claims-Dash",
   },
   description:
-    "A sophisticated, production-ready claims management dashboard built with Next.js 14, featuring real-time analytics, investigation tools, and comprehensive reporting.",
+    "Claims-Dash: a production-ready claims management dashboard built with Next.js 14, featuring real-time analytics, investigation tools, and comprehensive reporting.",
   keywords: [
     "claims",
     "insurance",
@@ -24,30 +24,30 @@ export const metadata: Metadata = {
     "investigation",
     "reporting",
   ],
-  authors: [{ name: "Claims Dashboard Team" }],
-  creator: "Claims Dashboard",
+  authors: [{ name: "Claims-Dash Team" }],
+  creator: "Claims-Dash",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://claims-dashboard.vercel.app",
-    siteName: "Claims Dashboard",
-    title: "Claims Dashboard - Professional Claims Management",
+    url: "https://claims-dash.vercel.app",
+    siteName: "Claims-Dash",
+    title: "Claims-Dash - Professional Claims Management",
     description:
-      "A sophisticated, production-ready claims management dashboard with real-time analytics and investigation tools.",
+      "Claims-Dash: a production-ready claims management dashboard with real-time analytics and investigation tools.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Claims Dashboard Preview",
+        alt: "Claims-Dash Preview",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Claims Dashboard - Professional Claims Management",
+    title: "Claims-Dash - Professional Claims Management",
     description:
-      "A sophisticated, production-ready claims management dashboard with real-time analytics and investigation tools.",
+      "Claims-Dash: a production-ready claims management dashboard with real-time analytics and investigation tools.",
     images: ["/og-image.png"],
   },
   robots: {
@@ -71,7 +71,7 @@ export default function RootLayout({
       <body
         className={cn(
           inter.className,
-          "min-h-screen bg-background font-sans antialiased"
+          "min-h-screen bg-background font-sans antialiased",
         )}
       >
         <Providers>

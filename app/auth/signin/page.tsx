@@ -149,11 +149,11 @@ export default function SignInPage() {
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <FileText className="h-5 w-5" />
             </div>
-            <span className="text-xl font-bold">Claims Dashboard</span>
+            <span className="text-xl font-bold">Claims-Dash</span>
           </Link>
           <h1 className="text-2xl font-bold">Welcome Back</h1>
           <p className="text-muted-foreground mt-2">
-            Sign in to your claims management dashboard
+            Sign in to your Claims-Dash account
           </p>
         </motion.div>
 

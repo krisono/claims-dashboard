@@ -1,7 +1,7 @@
 {
-  "name": "claims-dashboard-pro",
+  "name": "claims-dash",
   "version": "1.0.0",
-  "description": "Professional Claims Management Dashboard - Production Ready",
+  "description": "Claims-Dash - Professional Claims Management Dashboard",
   "private": true,
   "scripts": {
     "dev": "next dev",
