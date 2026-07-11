@@ -49,7 +49,8 @@ model User {
 
   accounts         Account[]
   sessions         Session[]
-  createdClaims    Claim[]
+  createdClaims    Claim[]          @relation("CreatedClaims")
+  assignedClaims   Claim[]          @relation("AssignedClaims")
   claimAssignments ClaimAssignment[]
   activities       Activity[]
 
@@ -91,7 +92,7 @@ model Claim {
   
   // Workflow
   assignedTo      String?
-  assignee        User?       @relation(fields: [assignedTo], references: [id])
+  assignee        User?       @relation("AssignedClaims", fields: [assignedTo], references: [id])
   createdBy       String
   creator         User        @relation("CreatedClaims", fields: [createdBy], references: [id])
   
