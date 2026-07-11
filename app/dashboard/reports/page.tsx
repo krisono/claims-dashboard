@@ -8,6 +8,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/toaster";
+import { Download, Plus, FileText, BarChart3, Shield, Settings, Clock } from "lucide-react";
 
 interface Report {
   id: string;
@@ -18,7 +21,15 @@ interface Report {
   fileSize: string;
 }
 
+const TYPE_ICONS: Record<string, typeof FileText> = {
+  Financial: BarChart3,
+  Security: Shield,
+  Operations: Settings,
+  Compliance: FileText,
+};
+
 export default function ReportsPage() {
+  const { addToast } = useToast();
   const [reports, setReports] = useState<Report[]>([
     {
       id: "RPT-001",
@@ -45,6 +56,18 @@ export default function ReportsPage() {
       fileSize: "Pending",
     },
   ]);
+
+  const handleDownload = (report: Report) => {
+    const content = `Report: ${report.title}\nType: ${report.type}\nGenerated: ${report.generatedAt}\nID: ${report.id}\n\nThis is a sample report export.`;
+    const blob = new Blob([content], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${report.id}-${report.title.replace(/\s+/g, "-").toLowerCase()}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+    addToast({ title: "Download Started", description: `${report.title} is downloading.` });
+  };
 
   const handleGenerateReport = () => {
     const reportTypes = ["Financial", "Security", "Operations", "Compliance"];
@@ -73,6 +96,7 @@ export default function ReportsPage() {
     };
 
     setReports([newReport, ...reports]);
+    addToast({ title: "Generating Report", description: `${newReport.title} is being generated...` });
 
     setTimeout(() => {
       setReports((prev) =>
@@ -86,6 +110,7 @@ export default function ReportsPage() {
             : r,
         ),
       );
+      addToast({ title: "Report Ready", description: `${newReport.title} is ready to download.`, variant: "success" });
     }, 2000);
   };
 
@@ -99,12 +124,10 @@ export default function ReportsPage() {
       </div>
 
       <div className="mb-4 sm:mb-6">
-        <button
-          onClick={handleGenerateReport}
-          className="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 text-sm sm:text-base w-full sm:w-auto transition-colors"
-        >
+        <Button onClick={handleGenerateReport} className="inline-flex items-center gap-2">
+          <Plus className="h-4 w-4" />
           Generate New Report
-        </button>
+        </Button>
       </div>
 
       <div className="grid gap-6">
@@ -143,14 +166,22 @@ export default function ReportsPage() {
                     {report.fileSize}
                   </p>
                 </div>
-                <div className="sm:col-span-1 col-span-2">
-                  {report.status === "Generated" && (
-                    <button
-                      onClick={() => alert(`Downloading ${report.title}...`)}
-                      className="text-primary hover:underline text-sm sm:text-base"
+                <div className="sm:col-span-1 col-span-2 flex items-end">
+                  {report.status === "Generated" ? (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleDownload(report)}
+                      className="inline-flex items-center gap-1.5"
                     >
-                      Download Report
-                    </button>
+                      <Download className="h-3.5 w-3.5" />
+                      Download
+                    </Button>
+                  ) : (
+                    <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                      <Clock className="h-3.5 w-3.5 animate-pulse" />
+                      Generating...
+                    </div>
                   )}
                 </div>
               </div>

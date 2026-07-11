@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   DollarSign,
@@ -11,7 +11,12 @@ import {
   CheckCircle,
   Users,
   Calendar,
+  Plus,
 } from "lucide-react";
+import { CreateClaimModal, type ClaimFormData } from "@/components/dashboard/create-claim-modal";
+import { useToast } from "@/components/ui/toaster";
+import { LastUpdated } from "@/components/ui/last-updated";
+import { ClientDate } from "@/components/ui/client-date";
 import { motion } from "framer-motion";
 
 const kpiData = [
@@ -199,10 +204,20 @@ function PriorityBadge({ priority }: { priority: string }) {
   );
 }
 
-import { LastUpdated } from "@/components/ui/last-updated";
-import { ClientDate } from "@/components/ui/client-date";
-
 export function DashboardOverview() {
+  const { addToast } = useToast();
+  const [createClaimOpen, setCreateClaimOpen] = useState(false);
+
+  const handleCreateClaimSubmit = (data: ClaimFormData) => {
+    const claimNumber = `CLM-${String(Math.floor(Math.random() * 90000) + 10000)}`;
+    setCreateClaimOpen(false);
+    addToast({
+      title: "Claim Created",
+      description: `${claimNumber} has been submitted. View it in the Claims Queue.`,
+      variant: "success",
+    });
+  };
+
   return (
     <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
       <div className="flex flex-col space-y-2 lg:flex-row lg:items-center lg:justify-between lg:space-y-0">
@@ -325,6 +340,14 @@ export function DashboardOverview() {
         transition={{ delay: 0.7 }}
         className="grid gap-4 md:grid-cols-3"
       >
+        {/* Create Claim Modal */}
+        <CreateClaimModal
+          open={createClaimOpen}
+          onClose={() => setCreateClaimOpen(false)}
+          onSubmit={handleCreateClaimSubmit}
+          mode="create"
+        />
+
         <div className="rounded-lg border bg-card p-6">
           <div className="flex items-center space-x-4">
             <div className="rounded-lg bg-blue-500/10 p-3">
@@ -337,7 +360,11 @@ export function DashboardOverview() {
               </p>
             </div>
           </div>
-          <button className="mt-4 w-full rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90">
+          <button
+            onClick={() => setCreateClaimOpen(true)}
+            className="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90 transition-colors"
+          >
+            <Plus className="h-4 w-4" />
             Create Claim
           </button>
         </div>
@@ -348,22 +375,19 @@ export function DashboardOverview() {
               <CheckCircle className="h-6 w-6 text-green-600" />
             </div>
             <div>
-              <h3 className="font-semibold">Bulk Approve</h3>
+              <h3 className="font-semibold">Bulk Actions</h3>
               <p className="text-sm text-muted-foreground">
-                Approve multiple claims
+                Approve or assign multiple claims
               </p>
             </div>
           </div>
-          <button
-            onClick={() => {
-              alert(
-                "Bulk Actions:\n• Approve selected claims\n• Reject selected claims\n• Assign to adjuster\n• Export to CSV"
-              );
-            }}
-            className="mt-4 w-full rounded-md border border-input bg-background px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+          <Link
+            href="/dashboard/claims"
+            className="mt-4 w-full rounded-md border border-input bg-background px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors inline-flex items-center justify-center gap-2"
           >
-            Bulk Actions
-          </button>
+            <CheckCircle className="h-4 w-4" />
+            Go to Claims Queue
+          </Link>
         </div>
 
         <div className="rounded-lg border bg-card p-6">
@@ -374,23 +398,15 @@ export function DashboardOverview() {
             <div>
               <h3 className="font-semibold">Fraud Detection</h3>
               <p className="text-sm text-muted-foreground">
-                <button
-                  onClick={() => {
-                    alert(
-                      "Flagged Claims for Review:\n• CLM-2024-001: Suspicious damage patterns\n• CLM-2024-007: Multiple claims from same address\n• CLM-2024-012: High-value claim requiring verification"
-                    );
-                  }}
-                  className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-                >
-                  Review flagged claims
-                </button>
+                Review flagged claims
               </p>
             </div>
           </div>
           <Link
             href="/dashboard/investigations"
-            className="mt-4 w-full rounded-md border border-input bg-background px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors inline-block text-center"
+            className="mt-4 w-full rounded-md border border-input bg-background px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors inline-flex items-center justify-center gap-2"
           >
+            <AlertTriangle className="h-4 w-4 text-orange-600" />
             Investigate
           </Link>
         </div>

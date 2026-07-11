@@ -99,7 +99,7 @@
     "vitest": "^4.0.15"
   },
   "engines": {
-    "node": ">=18.17.0",
+    "node": "22.x",
     "pnpm": ">=8.0.0"
   },
   "packageManager": "pnpm@8.15.1"

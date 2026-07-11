@@ -17,9 +17,20 @@ import {
   Bell,
   Menu,
   X,
+  CheckCircle,
+  AlertTriangle,
+  Clock,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { signOut, useSession } from "next-auth/react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const navigation = [
   { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
@@ -29,11 +40,56 @@ const navigation = [
   { name: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
+const NOTIFICATIONS = [
+  {
+    id: "1",
+    icon: FileText,
+    iconClass: "text-blue-600 bg-blue-50",
+    title: "New claim submitted",
+    desc: "CLM-001848 — Jennifer Davis",
+    time: "2 min ago",
+    unread: true,
+  },
+  {
+    id: "2",
+    icon: CheckCircle,
+    iconClass: "text-green-600 bg-green-50",
+    title: "Investigation completed",
+    desc: "CLM-001845 cleared for review",
+    time: "1 hr ago",
+    unread: true,
+  },
+  {
+    id: "3",
+    icon: AlertTriangle,
+    iconClass: "text-orange-600 bg-orange-50",
+    title: "Fraud alert flagged",
+    desc: "CLM-001840 — score 65%",
+    time: "3 hr ago",
+    unread: true,
+  },
+  {
+    id: "4",
+    icon: Clock,
+    iconClass: "text-muted-foreground bg-muted",
+    title: "Report ready for review",
+    desc: "Monthly Claims Summary — Jan 2024",
+    time: "Yesterday",
+    unread: false,
+  },
+];
+
 export function Navbar() {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   const { data: session } = useSession();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [notifications, setNotifications] = useState(NOTIFICATIONS);
+
+  const unreadCount = notifications.filter((n) => n.unread).length;
+
+  const markAllRead = () => setNotifications((prev) => prev.map((n) => ({ ...n, unread: false })));
+  const markRead = (id: string) => setNotifications((prev) => prev.map((n) => n.id === id ? { ...n, unread: false } : n));
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -83,19 +139,66 @@ export function Navbar() {
         </nav>
 
         <div className="ml-auto flex items-center space-x-2 md:space-x-4">
-          <button
-            onClick={() =>
-              alert(
-                "3 new notifications:\n• New claim submitted\n• Investigation completed\n• Report ready for review"
-              )
-            }
-            className="relative rounded-md p-2 text-foreground/60 hover:text-foreground transition-colors"
-          >
-            <Bell className="h-4 w-4" />
-            <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-red-500 text-[10px] text-white flex items-center justify-center font-medium">
-              3
-            </span>
-          </button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="relative rounded-md p-2 text-foreground/60 hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-ring">
+                <Bell className="h-4 w-4" />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-red-500 text-[10px] text-white flex items-center justify-center font-medium">
+                    {unreadCount}
+                  </span>
+                )}
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-80">
+              <div className="flex items-center justify-between px-2 py-1.5">
+                <DropdownMenuLabel className="p-0 text-sm font-semibold normal-case tracking-normal">
+                  Notifications
+                  {unreadCount > 0 && (
+                    <span className="ml-2 px-1.5 py-0.5 bg-primary/10 text-primary rounded text-xs">
+                      {unreadCount} new
+                    </span>
+                  )}
+                </DropdownMenuLabel>
+                {unreadCount > 0 && (
+                  <button onClick={markAllRead} className="text-xs text-primary hover:underline">
+                    Mark all read
+                  </button>
+                )}
+              </div>
+              <DropdownMenuSeparator />
+              {notifications.map((n) => {
+                const Icon = n.icon;
+                return (
+                  <DropdownMenuItem
+                    key={n.id}
+                    className="flex items-start gap-3 py-3 cursor-pointer"
+                    onClick={() => markRead(n.id)}
+                  >
+                    <div className={`rounded-full p-1.5 shrink-0 ${n.iconClass}`}>
+                      <Icon className="h-3.5 w-3.5" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className={`text-sm leading-tight ${n.unread ? "font-semibold" : "font-normal"}`}>
+                        {n.title}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-0.5 truncate">{n.desc}</p>
+                      <p className="text-xs text-muted-foreground mt-0.5">{n.time}</p>
+                    </div>
+                    {n.unread && (
+                      <div className="h-2 w-2 rounded-full bg-primary shrink-0 mt-1.5" />
+                    )}
+                  </DropdownMenuItem>
+                );
+              })}
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard" className="justify-center text-sm text-primary font-medium">
+                  View all notifications
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
