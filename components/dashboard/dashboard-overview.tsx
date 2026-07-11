@@ -13,7 +13,10 @@ import {
   Calendar,
   Plus,
 } from "lucide-react";
-import { CreateClaimModal, type ClaimFormData } from "@/components/dashboard/create-claim-modal";
+import {
+  CreateClaimModal,
+  type ClaimFormData,
+} from "@/components/dashboard/create-claim-modal";
 import { useToast } from "@/components/ui/toaster";
 import { LastUpdated } from "@/components/ui/last-updated";
 import { ClientDate } from "@/components/ui/client-date";

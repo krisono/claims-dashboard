@@ -51,12 +51,42 @@ interface ClaimDetailModalProps {
 }
 
 const STATUS_OPTIONS = [
-  { value: "SUBMITTED", label: "Submitted", icon: Clock, color: "text-blue-600 bg-blue-50" },
-  { value: "UNDER_REVIEW", label: "Under Review", icon: Shield, color: "text-yellow-600 bg-yellow-50" },
-  { value: "INVESTIGATION", label: "Investigation", icon: AlertTriangle, color: "text-purple-600 bg-purple-50" },
-  { value: "APPROVED", label: "Approved", icon: CheckCircle, color: "text-green-600 bg-green-50" },
-  { value: "REJECTED", label: "Rejected", icon: XCircle, color: "text-red-600 bg-red-50" },
-  { value: "SETTLED", label: "Settled", icon: CheckCircle, color: "text-gray-600 bg-gray-50" },
+  {
+    value: "SUBMITTED",
+    label: "Submitted",
+    icon: Clock,
+    color: "text-blue-600 bg-blue-50",
+  },
+  {
+    value: "UNDER_REVIEW",
+    label: "Under Review",
+    icon: Shield,
+    color: "text-yellow-600 bg-yellow-50",
+  },
+  {
+    value: "INVESTIGATION",
+    label: "Investigation",
+    icon: AlertTriangle,
+    color: "text-purple-600 bg-purple-50",
+  },
+  {
+    value: "APPROVED",
+    label: "Approved",
+    icon: CheckCircle,
+    color: "text-green-600 bg-green-50",
+  },
+  {
+    value: "REJECTED",
+    label: "Rejected",
+    icon: XCircle,
+    color: "text-red-600 bg-red-50",
+  },
+  {
+    value: "SETTLED",
+    label: "Settled",
+    icon: CheckCircle,
+    color: "text-gray-600 bg-gray-50",
+  },
 ];
 
 const PRIORITY_COLORS: Record<string, string> = {
@@ -68,18 +98,35 @@ const PRIORITY_COLORS: Record<string, string> = {
 
 function FraudBar({ score }: { score: number }) {
   const color =
-    score < 25 ? "bg-green-500" : score < 50 ? "bg-yellow-500" : score < 75 ? "bg-orange-500" : "bg-red-500";
+    score < 25
+      ? "bg-green-500"
+      : score < 50
+        ? "bg-yellow-500"
+        : score < 75
+          ? "bg-orange-500"
+          : "bg-red-500";
   const label =
-    score < 25 ? "Low Risk" : score < 50 ? "Medium Risk" : score < 75 ? "High Risk" : "Critical Risk";
+    score < 25
+      ? "Low Risk"
+      : score < 50
+        ? "Medium Risk"
+        : score < 75
+          ? "High Risk"
+          : "Critical Risk";
 
   return (
     <div className="space-y-1.5">
       <div className="flex justify-between text-sm">
         <span className="text-muted-foreground">Fraud Risk Score</span>
-        <span className="font-semibold">{score}% — {label}</span>
+        <span className="font-semibold">
+          {score}% — {label}
+        </span>
       </div>
       <div className="h-2 rounded-full bg-muted overflow-hidden">
-        <div className={`h-full rounded-full transition-all ${color}`} style={{ width: `${score}%` }} />
+        <div
+          className={`h-full rounded-full transition-all ${color}`}
+          style={{ width: `${score}%` }}
+        />
       </div>
     </div>
   );
@@ -144,22 +191,32 @@ export function ClaimDetailModal({
                 <div className="flex items-center gap-2.5">
                   <Tag className="h-4 w-4 text-muted-foreground shrink-0" />
                   <div>
-                    <p className="text-xs text-muted-foreground">Incident Type</p>
-                    <p className="text-sm font-medium">{claim.incidentType.replace(/_/g, " ")}</p>
+                    <p className="text-xs text-muted-foreground">
+                      Incident Type
+                    </p>
+                    <p className="text-sm font-medium">
+                      {claim.incidentType.replace(/_/g, " ")}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2.5">
                   <DollarSign className="h-4 w-4 text-muted-foreground shrink-0" />
                   <div>
-                    <p className="text-xs text-muted-foreground">Claim Amount</p>
-                    <p className="text-sm font-bold text-primary">{formatCurrency(claim.claimAmount)}</p>
+                    <p className="text-xs text-muted-foreground">
+                      Claim Amount
+                    </p>
+                    <p className="text-sm font-bold text-primary">
+                      {formatCurrency(claim.claimAmount)}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2.5">
                   <Calendar className="h-4 w-4 text-muted-foreground shrink-0" />
                   <div>
                     <p className="text-xs text-muted-foreground">Submitted</p>
-                    <p className="text-sm font-medium">{formatDate(claim.createdAt)}</p>
+                    <p className="text-sm font-medium">
+                      {formatDate(claim.createdAt)}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -176,7 +233,9 @@ export function ClaimDetailModal({
                     <p className="text-xs text-muted-foreground">Assigned To</p>
                     <p className="text-sm font-medium">
                       {claim.assignee?.name ?? (
-                        <span className="text-muted-foreground italic">Unassigned</span>
+                        <span className="text-muted-foreground italic">
+                          Unassigned
+                        </span>
                       )}
                     </p>
                   </div>
@@ -187,7 +246,8 @@ export function ClaimDetailModal({
                     <p className="text-xs text-muted-foreground">Priority</p>
                     <span
                       className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
-                        PRIORITY_COLORS[claim.priority] ?? PRIORITY_COLORS["MEDIUM"]
+                        PRIORITY_COLORS[claim.priority] ??
+                        PRIORITY_COLORS["MEDIUM"]
                       }`}
                     >
                       {claim.priority}
@@ -198,7 +258,9 @@ export function ClaimDetailModal({
                   <div className="flex items-start gap-2.5">
                     <FileText className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-xs text-muted-foreground">Description</p>
+                      <p className="text-xs text-muted-foreground">
+                        Description
+                      </p>
                       <p className="text-sm">{claim.description}</p>
                     </div>
                   </div>
@@ -240,7 +302,8 @@ export function ClaimDetailModal({
           {confirmDelete && (
             <div className="rounded-lg border border-destructive/50 bg-destructive/5 p-4 space-y-3">
               <p className="text-sm font-medium text-destructive">
-                Are you sure you want to delete this claim? This action cannot be undone.
+                Are you sure you want to delete this claim? This action cannot
+                be undone.
               </p>
               <div className="flex gap-2">
                 <Button
@@ -253,7 +316,11 @@ export function ClaimDetailModal({
                 >
                   Yes, Delete
                 </Button>
-                <Button variant="outline" size="sm" onClick={() => setConfirmDelete(false)}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setConfirmDelete(false)}
+                >
                   Cancel
                 </Button>
               </div>
@@ -263,7 +330,11 @@ export function ClaimDetailModal({
 
         <DialogFooter>
           {!confirmDelete && (
-            <Button variant="destructive" size="sm" onClick={() => setConfirmDelete(true)}>
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={() => setConfirmDelete(true)}
+            >
               Delete Claim
             </Button>
           )}

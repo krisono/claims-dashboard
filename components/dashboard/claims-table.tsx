@@ -19,8 +19,14 @@ import {
 } from "lucide-react";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import { useToast } from "@/components/ui/toaster";
-import { CreateClaimModal, type ClaimFormData } from "@/components/dashboard/create-claim-modal";
-import { ClaimDetailModal, type Claim } from "@/components/dashboard/claim-detail-modal";
+import {
+  CreateClaimModal,
+  type ClaimFormData,
+} from "@/components/dashboard/create-claim-modal";
+import {
+  ClaimDetailModal,
+  type Claim,
+} from "@/components/dashboard/claim-detail-modal";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -43,7 +49,8 @@ const INITIAL_CLAIMS: Claim[] = [
     createdAt: "2024-01-15T10:30:00Z",
     assignee: { name: "John Smith" },
     fraudScore: 15,
-    description: "Rear-end collision on I-95 resulting in vehicle damage and personal injury.",
+    description:
+      "Rear-end collision on I-95 resulting in vehicle damage and personal injury.",
   },
   {
     id: "2",
@@ -70,7 +77,8 @@ const INITIAL_CLAIMS: Claim[] = [
     createdAt: "2024-01-14T14:45:00Z",
     assignee: { name: "Bob Wilson" },
     fraudScore: 75,
-    description: "Emergency hospitalization following workplace accident. Multiple inconsistencies noted.",
+    description:
+      "Emergency hospitalization following workplace accident. Multiple inconsistencies noted.",
   },
   {
     id: "4",
@@ -97,7 +105,8 @@ const INITIAL_CLAIMS: Claim[] = [
     createdAt: "2024-01-13T16:10:00Z",
     assignee: null,
     fraudScore: 12,
-    description: "Kitchen fire caused extensive damage to property. Fire department report attached.",
+    description:
+      "Kitchen fire caused extensive damage to property. Fire department report attached.",
   },
   {
     id: "6",
@@ -228,17 +237,41 @@ const INITIAL_CLAIMS: Claim[] = [
     createdAt: "2024-01-03T08:30:00Z",
     assignee: { name: "Chris Martinez" },
     fraudScore: 45,
-    description: "Alleged surgical error resulting in prolonged recovery and additional medical costs.",
+    description:
+      "Alleged surgical error resulting in prolonged recovery and additional medical costs.",
   },
 ];
 
-const STATUS_BADGE: Record<string, { bg: string; text: string; border: string }> = {
-  SUBMITTED: { bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200" },
-  UNDER_REVIEW: { bg: "bg-yellow-50", text: "text-yellow-700", border: "border-yellow-200" },
-  INVESTIGATION: { bg: "bg-purple-50", text: "text-purple-700", border: "border-purple-200" },
-  APPROVED: { bg: "bg-green-50", text: "text-green-700", border: "border-green-200" },
+const STATUS_BADGE: Record<
+  string,
+  { bg: string; text: string; border: string }
+> = {
+  SUBMITTED: {
+    bg: "bg-blue-50",
+    text: "text-blue-700",
+    border: "border-blue-200",
+  },
+  UNDER_REVIEW: {
+    bg: "bg-yellow-50",
+    text: "text-yellow-700",
+    border: "border-yellow-200",
+  },
+  INVESTIGATION: {
+    bg: "bg-purple-50",
+    text: "text-purple-700",
+    border: "border-purple-200",
+  },
+  APPROVED: {
+    bg: "bg-green-50",
+    text: "text-green-700",
+    border: "border-green-200",
+  },
   REJECTED: { bg: "bg-red-50", text: "text-red-700", border: "border-red-200" },
-  SETTLED: { bg: "bg-gray-100", text: "text-gray-700", border: "border-gray-200" },
+  SETTLED: {
+    bg: "bg-gray-100",
+    text: "text-gray-700",
+    border: "border-gray-200",
+  },
 };
 
 const PRIORITY_BADGE: Record<string, string> = {
@@ -276,10 +309,10 @@ function FraudScore({ score }: { score: number }) {
     score < 25
       ? "text-green-600"
       : score < 50
-      ? "text-yellow-600"
-      : score < 75
-      ? "text-orange-600"
-      : "text-red-600";
+        ? "text-yellow-600"
+        : score < 75
+          ? "text-orange-600"
+          : "text-red-600";
   return (
     <div className="flex items-center gap-1">
       <AlertTriangle className={`h-3.5 w-3.5 ${color}`} />
@@ -309,8 +342,10 @@ export function ClaimsTable() {
         claim.claimantName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         claim.claimNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
         claim.title.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesStatus = statusFilter === "ALL" || claim.status === statusFilter;
-      const matchesPriority = priorityFilter === "ALL" || claim.priority === priorityFilter;
+      const matchesStatus =
+        statusFilter === "ALL" || claim.status === statusFilter;
+      const matchesPriority =
+        priorityFilter === "ALL" || claim.priority === priorityFilter;
       return matchesSearch && matchesStatus && matchesPriority;
     });
   }, [allClaims, searchTerm, statusFilter, priorityFilter]);
@@ -354,8 +389,8 @@ export function ClaimsTable() {
               assignee: data.assignee ? { name: data.assignee } : null,
               description: data.description || undefined,
             }
-          : c
-      )
+          : c,
+      ),
     );
     setEditClaim(null);
     addToast({
@@ -367,9 +402,11 @@ export function ClaimsTable() {
 
   const handleStatusChange = (claimId: string, newStatus: string) => {
     setAllClaims((prev) =>
-      prev.map((c) => (c.id === claimId ? { ...c, status: newStatus } : c))
+      prev.map((c) => (c.id === claimId ? { ...c, status: newStatus } : c)),
     );
-    setViewClaim((prev) => (prev && prev.id === claimId ? { ...prev, status: newStatus } : prev));
+    setViewClaim((prev) =>
+      prev && prev.id === claimId ? { ...prev, status: newStatus } : prev,
+    );
     addToast({
       title: "Status Updated",
       description: `Claim status changed to ${newStatus.replace(/_/g, " ")}.`,
@@ -388,7 +425,16 @@ export function ClaimsTable() {
   };
 
   const handleExport = () => {
-    const headers = ["Claim #", "Claimant", "Title", "Type", "Amount", "Status", "Priority", "Date"];
+    const headers = [
+      "Claim #",
+      "Claimant",
+      "Title",
+      "Type",
+      "Amount",
+      "Status",
+      "Priority",
+      "Date",
+    ];
     const rows = claims.map((c) => [
       c.claimNumber,
       c.claimantName,
@@ -407,16 +453,25 @@ export function ClaimsTable() {
     a.download = `claims-export-${new Date().toISOString().split("T")[0]}.csv`;
     a.click();
     URL.revokeObjectURL(url);
-    addToast({ title: "Export Complete", description: `${claims.length} claims exported to CSV.` });
+    addToast({
+      title: "Export Complete",
+      description: `${claims.length} claims exported to CSV.`,
+    });
   };
 
   const handleBulkApprove = () => {
     if (selectedClaims.length === 0) {
-      addToast({ title: "No Claims Selected", description: "Select at least one claim to approve.", variant: "warning" });
+      addToast({
+        title: "No Claims Selected",
+        description: "Select at least one claim to approve.",
+        variant: "warning",
+      });
       return;
     }
     setAllClaims((prev) =>
-      prev.map((c) => (selectedClaims.includes(c.id) ? { ...c, status: "APPROVED" } : c))
+      prev.map((c) =>
+        selectedClaims.includes(c.id) ? { ...c, status: "APPROVED" } : c,
+      ),
     );
     addToast({
       title: "Claims Approved",
@@ -428,11 +483,17 @@ export function ClaimsTable() {
 
   const handleFraudInvestigation = () => {
     if (selectedClaims.length === 0) {
-      addToast({ title: "No Claims Selected", description: "Select at least one claim to investigate.", variant: "warning" });
+      addToast({
+        title: "No Claims Selected",
+        description: "Select at least one claim to investigate.",
+        variant: "warning",
+      });
       return;
     }
     setAllClaims((prev) =>
-      prev.map((c) => (selectedClaims.includes(c.id) ? { ...c, status: "INVESTIGATION" } : c))
+      prev.map((c) =>
+        selectedClaims.includes(c.id) ? { ...c, status: "INVESTIGATION" } : c,
+      ),
     );
     addToast({
       title: "Investigation Started",
@@ -442,7 +503,10 @@ export function ClaimsTable() {
     setSelectedClaims([]);
   };
 
-  const container = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.04 } } };
+  const container = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { staggerChildren: 0.04 } },
+  };
   const item = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } };
 
   return (
@@ -563,11 +627,20 @@ export function ClaimsTable() {
         {/* Stats row */}
         <div className="flex items-center gap-4 text-sm text-muted-foreground">
           <span>
-            Showing <span className="font-semibold text-foreground">{claims.length}</span> of{" "}
-            <span className="font-semibold text-foreground">{allClaims.length}</span> claims
+            Showing{" "}
+            <span className="font-semibold text-foreground">
+              {claims.length}
+            </span>{" "}
+            of{" "}
+            <span className="font-semibold text-foreground">
+              {allClaims.length}
+            </span>{" "}
+            claims
           </span>
           {selectedClaims.length > 0 && (
-            <span className="text-primary font-medium">{selectedClaims.length} selected</span>
+            <span className="text-primary font-medium">
+              {selectedClaims.length} selected
+            </span>
           )}
         </div>
 
@@ -580,25 +653,39 @@ export function ClaimsTable() {
                   <th className="px-4 py-3 text-left w-10">
                     <input
                       type="checkbox"
-                      checked={selectedClaims.length === claims.length && claims.length > 0}
+                      checked={
+                        selectedClaims.length === claims.length &&
+                        claims.length > 0
+                      }
                       onChange={() =>
                         setSelectedClaims(
-                          selectedClaims.length === claims.length ? [] : claims.map((c) => c.id)
+                          selectedClaims.length === claims.length
+                            ? []
+                            : claims.map((c) => c.id),
                         )
                       }
                       className="rounded border-border text-primary focus:ring-primary h-4 w-4"
                     />
                   </th>
-                  {["Claim", "Claimant", "Type", "Amount", "Status", "Priority", "Assignee", "Fraud Risk", "Date", ""].map(
-                    (h) => (
-                      <th
-                        key={h}
-                        className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider whitespace-nowrap"
-                      >
-                        {h}
-                      </th>
-                    )
-                  )}
+                  {[
+                    "Claim",
+                    "Claimant",
+                    "Type",
+                    "Amount",
+                    "Status",
+                    "Priority",
+                    "Assignee",
+                    "Fraud Risk",
+                    "Date",
+                    "",
+                  ].map((h) => (
+                    <th
+                      key={h}
+                      className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider whitespace-nowrap"
+                    >
+                      {h}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <motion.tbody
@@ -621,22 +708,28 @@ export function ClaimsTable() {
                           setSelectedClaims((prev) =>
                             prev.includes(claim.id)
                               ? prev.filter((id) => id !== claim.id)
-                              : [...prev, claim.id]
+                              : [...prev, claim.id],
                           )
                         }
                         className="rounded border-border text-primary focus:ring-primary h-4 w-4"
                       />
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap">
-                      <div className="font-medium text-sm">{claim.claimNumber}</div>
-                      <div className="text-xs text-muted-foreground truncate max-w-[140px]">{claim.title}</div>
+                      <div className="font-medium text-sm">
+                        {claim.claimNumber}
+                      </div>
+                      <div className="text-xs text-muted-foreground truncate max-w-[140px]">
+                        {claim.title}
+                      </div>
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap">
                       <div className="flex items-center gap-2">
                         <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                           <User className="h-4 w-4 text-primary" />
                         </div>
-                        <span className="text-sm font-medium">{claim.claimantName}</span>
+                        <span className="text-sm font-medium">
+                          {claim.claimantName}
+                        </span>
                       </div>
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap text-sm text-muted-foreground">
@@ -658,7 +751,9 @@ export function ClaimsTable() {
                       {claim.assignee ? (
                         <span>{claim.assignee.name}</span>
                       ) : (
-                        <span className="text-muted-foreground italic text-xs">Unassigned</span>
+                        <span className="text-muted-foreground italic text-xs">
+                          Unassigned
+                        </span>
                       )}
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap">
@@ -697,18 +792,32 @@ export function ClaimsTable() {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem onClick={() => setViewClaim(claim)}>
+                            <DropdownMenuItem
+                              onClick={() => setViewClaim(claim)}
+                            >
                               <Eye className="h-4 w-4 mr-2" /> View Details
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => setEditClaim(claim)}>
+                            <DropdownMenuItem
+                              onClick={() => setEditClaim(claim)}
+                            >
                               <Edit className="h-4 w-4 mr-2" /> Edit Claim
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => handleStatusChange(claim.id, "APPROVED")}>
-                              <CheckCircle className="h-4 w-4 mr-2 text-green-600" /> Approve
+                            <DropdownMenuItem
+                              onClick={() =>
+                                handleStatusChange(claim.id, "APPROVED")
+                              }
+                            >
+                              <CheckCircle className="h-4 w-4 mr-2 text-green-600" />{" "}
+                              Approve
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => handleStatusChange(claim.id, "INVESTIGATION")}>
-                              <AlertTriangle className="h-4 w-4 mr-2 text-orange-600" /> Flag for Investigation
+                            <DropdownMenuItem
+                              onClick={() =>
+                                handleStatusChange(claim.id, "INVESTIGATION")
+                              }
+                            >
+                              <AlertTriangle className="h-4 w-4 mr-2 text-orange-600" />{" "}
+                              Flag for Investigation
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem
@@ -731,7 +840,9 @@ export function ClaimsTable() {
             <div className="text-center py-16">
               <Search className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
               <h3 className="text-base font-semibold mb-1">No claims found</h3>
-              <p className="text-sm text-muted-foreground">Try adjusting your search or filters</p>
+              <p className="text-sm text-muted-foreground">
+                Try adjusting your search or filters
+              </p>
               <button
                 onClick={() => {
                   setSearchTerm("");
