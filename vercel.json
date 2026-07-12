@@ -36,6 +36,5 @@
       "destination": "/dashboard",
       "permanent": false
     }
-  ],
-  "nodeVersion": "22.x"
+  ]
 }
