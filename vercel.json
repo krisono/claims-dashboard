@@ -37,5 +37,5 @@
       "permanent": false
     }
   ],
-  "nodeVersion": "24.x"
+  "nodeVersion": "22.x"
 }
